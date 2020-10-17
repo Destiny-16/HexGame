@@ -104,7 +104,7 @@ def setPlayers():
         
 
     
-def drawLine(turn, player, computer):
+def drawLine(turn, player, computer, i, j):
     start = input("Starting node: ")
     end = input("Ending node: ")
     
@@ -112,26 +112,34 @@ def drawLine(turn, player, computer):
     y3 = 0
     x4 = 0
     y4 = 0
+    node1 = ''
+    node2 = ''
 
     
     if(start == n1.node):
         x3 = n1.x1
         y3 = n1.y1
+        node1 = n1.node
     elif(start == n2.node):
         x3 = n2.x1
         y3 = n2.y1
+        node1 = n2.node
     elif(start == n3.node):
         x3 = n3.x1
         y3 = n3.y1
+        node1 = n3.node
     elif(start == n4.node):
         x3 = n4.x1
         y3 = n4.y1
+        node1 = n4.node
     elif(start == n5.node):
         x3 = n5.x1
         y3 = n5.y1
+        node1 = n5.node
     elif(start == n6.node):
         x3 = n6.x1
         y3 = n6.y1
+        node1 = n6.node
     else:
         print("invalid entry")
         exit()
@@ -139,21 +147,27 @@ def drawLine(turn, player, computer):
     if(end == n1.node):
         x4 = n1.x2
         y4 = n1.y2
+        node2 = n1.node
     elif(end == n2.node):
         x4 = n2.x2
         y4 = n2.y2
+        node2 = n2.node
     elif(end == n3.node):
         x4 = n3.x2
         y4 = n3.y2
+        node2 = n3.node
     elif(end == n4.node):
         x4 = n4.x2
         y4 = n4.y2
+        node2 = n4.node
     elif(end == n5.node):
         x4 = n5.x2
         y4 = n5.y2
+        node2 = n5.node
     elif(end == n6.node):
         x4 = n6.x2
         y4 = n6.y2
+        node2 = n6.node
     else:
         print("invalid entry")
         exit()
@@ -162,6 +176,17 @@ def drawLine(turn, player, computer):
         draw.create_line(x3,y3,x4,y4,width=3)
     else:
         draw.create_line(x3,y3,x4,y4,width=3, dash=(3,5))
+
+    if(turn == player):
+        p[i] = [node1, node2]
+        i = i + 1
+    elif( turn == computer):
+        c[j] = [node1, node2]
+        j = j + 1
+
+
+    return [i,j]
+
         
 
 
@@ -189,6 +214,7 @@ def checkWinner():
 
 
 n = [0]*3
+increment = [0]*2
 winner = False
 n = setPlayers()
 
@@ -200,10 +226,17 @@ computer = n[2]
 while(winner == False):
     print(turn, "'s", " turn")
     drawBoard()
-    drawLine(turn, player, computer)
+    increment = drawLine(turn, player, computer, i, j)
+    i = increment[0]
+    j = increment[1]
     frame.update()
     turn = getPlayer(turn, player, computer)
     winner = checkWinner()
+
+    print('p', p)
+    print('c', c)
+
+    
 
 
 
