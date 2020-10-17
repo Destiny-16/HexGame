@@ -14,6 +14,10 @@ computer = ""
 start = ""
 end = ""
 turn = ""
+p = ['0']*100
+c = ['0']*100
+i = 0
+j = 0
 
 class Node:
     x1 = 0 
@@ -64,14 +68,6 @@ n6.y1 = 180
 n6.x2 = 70
 n6.y2 = 170
 
-    
-
-#draw.create_line(150,90,80,180,width=3) #1 to 6
-#draw.create_line(150,90,80,180,width=3, dash=(3,5))#1 to 6
-#draw.create_line(150,90,240,80,width=3) #1 to 2
-#draw.create_line(150,90,240,80,width=3, dash=(3,5))#1 to 2
-#draw.create_line(250,90,300,170,width=3) #2 to 3
-#draw.create_line(250,90,300,170,width=3, dash=(3,5))#2 to 3
 
 
 
@@ -83,17 +79,18 @@ def drawBoard():
     draw.create_oval(n5.x1, n5.y1, n5.x2, n5.y2, fill='black') #5
     draw.create_oval(n6.x1, n6.y1, n6.x2, n6.y2, fill='black') #6
 
+
 def setPlayers():
    choice = input("Whice Player? 1(solid) or 2(dashed)?: ")
 
    if(choice == '1'):
-        print("your are solid lines")
+        print("you are solid lines")
         computer = "p2"
         player = "p1"
         turn = player
         
    elif(choice == '2'):
-        print("your are dashed lines")
+        print("you are dashed lines")
         computer = "p1"
         player = "p2"
         turn = computer
@@ -101,11 +98,13 @@ def setPlayers():
    else:
         print("invalid input")
         exit();
+
+   n = [turn, player, computer]
+   return n
         
 
     
-
-def drawLine(turn):
+def drawLine(turn, player, computer):
     start = input("Starting node: ")
     end = input("Ending node: ")
     
@@ -159,39 +158,49 @@ def drawLine(turn):
         print("invalid entry")
         exit()
 
-
     if(turn == "p1"):
         draw.create_line(x3,y3,x4,y4,width=3)
     else:
         draw.create_line(x3,y3,x4,y4,width=3, dash=(3,5))
+        
 
 
 def getPlayer(turn, player, computer):
+
  
-    if (turn != "p1"):
-        turn = "p1"
+    if (turn != player):
+        turn = player
        
     else:
-        turn = "p2"
-    
+        turn = computer
+
     return turn
+
         
 
     
 def checkWinner():
     return False;
+
+#def ComputerChoice():
     
     
+    
 
 
-
+n = [0]*3
 winner = False
-turn = "p1"
+n = setPlayers()
+
+turn = n[0]
+player = n[1]
+computer = n[2]
+
 
 while(winner == False):
     print(turn, "'s", " turn")
     drawBoard()
-    drawLine(turn)
+    drawLine(turn, player, computer)
     frame.update()
     turn = getPlayer(turn, player, computer)
     winner = checkWinner()
